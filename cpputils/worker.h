@@ -11,17 +11,21 @@ namespace cpputils {
 ///
 class Worker {
  public:
-
-  /// constructs opaque
+  /// construct opaque
   Worker();
 
-  /// destructor call std::thread::join() on its thread
+  /// thread cannot be copied
+  Worker(const Worker &) = delete;
+
+  Worker(Worker &&) = default;
+
+  /// call std::thread::join() on its thread
   ~Worker();
 
   /// start worker thread
   bool start();
 
-  /// stop worker thread and delete tasks queue
+  /// stop worker thread and clar tasks queue if clear_queue = true
   bool stop(bool clear_queue);
 
   /// add task in the end of the tasks queue
@@ -35,7 +39,6 @@ class Worker {
   struct Opaque;
   std::unique_ptr<Opaque> o_;
 };
-
 }
 
 #endif  // CPPUTILS_WORKER_H

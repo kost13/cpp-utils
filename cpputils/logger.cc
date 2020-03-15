@@ -11,8 +11,14 @@ void datetime(std::ostream &stream) {
   stream << std::put_time(std::localtime(&t), "%F %T: ");
 }
 
-// global logger, hidden from the user
+// logger hidden from the user accessible via functions from log namespace
 cpputils::Logger logger;
+}
+
+cpputils::Logger::~Logger() {
+  if (fs_.is_open()) {
+    fs_.close();
+  }
 }
 
 void cpputils::Logger::configure(cpputils::Logger::Config c) {
@@ -89,6 +95,12 @@ const char *cpputils::Logger::typeToString(cpputils::Logger::LogType t) {
       return "critical";
   }
 }
+
+cpputils::Logger::LoggerStream::~LoggerStream() {
+  logger_.flush(std::move(str()), t_);
+}
+
+/// log namespace
 
 void cpputils::log::configure(int c) { logger.configure(c); }
 

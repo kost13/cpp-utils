@@ -18,6 +18,9 @@ class Logger {
   enum Config { SHOW_PREFIX = 0x01, SHOW_DATETIME = 0x02, SHOW_DEBUG = 0x04 };
   class LoggerStream;
 
+  Logger() = default;
+  ~Logger();
+
   void configure(Config c);
   void configure(int c);
 
@@ -48,7 +51,7 @@ class Logger {
     LoggerStream(Logger &logger, LogType t) : logger_(logger), t_(t) {}
     LoggerStream(const LoggerStream &o) : logger_(o.logger_), t_(o.t_) {}
     LoggerStream(LoggerStream &&) = default;
-    ~LoggerStream() { logger_.flush(std::move(str()), t_); }
+    ~LoggerStream();
 
     template <typename T>
     LoggerStream &operator<<(const std::vector<T> &v) {
