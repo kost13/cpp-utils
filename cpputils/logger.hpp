@@ -19,6 +19,8 @@ class Logger {
   class LoggerStream;
 
   Logger() = default;
+  Logger(Logger &) = delete;
+  Logger(Logger &&) = default;
   ~Logger();
 
   void configure(Config c);
@@ -49,8 +51,9 @@ class Logger {
   class LoggerStream : public std::ostringstream {
    public:
     LoggerStream(Logger &logger, LogType t) : logger_(logger), t_(t) {}
-    LoggerStream(const LoggerStream &o) : logger_(o.logger_), t_(o.t_) {}
-    LoggerStream(LoggerStream &&) = default;
+    LoggerStream(const LoggerStream &o) = delete;
+    LoggerStream &operator=(const LoggerStream &) = delete;
+    LoggerStream(LoggerStream &&o);
     ~LoggerStream();
 
     template <typename T>

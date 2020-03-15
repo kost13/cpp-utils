@@ -96,6 +96,9 @@ const char *cpputils::Logger::typeToString(cpputils::Logger::LogType t) {
   }
 }
 
+cpputils::Logger::LoggerStream::LoggerStream(cpputils::Logger::LoggerStream &&o)
+    : logger_(o.logger_), t_(std::move(o.t_)) {}
+
 cpputils::Logger::LoggerStream::~LoggerStream() {
   logger_.flush(std::move(str()), t_);
 }
