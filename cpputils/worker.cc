@@ -63,7 +63,9 @@ bool cpputils::Worker::stop(bool clear_queue) {
     }
     o_->is_running_ = false;
 
-    if (clear_queue) o_->task_queue_.clear();
+    if (clear_queue) {
+      o_->task_queue_.clear();
+    }
   }
 
   o_->condition_.notify_all();

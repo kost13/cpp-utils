@@ -16,8 +16,10 @@ class Worker {
 
   /// thread cannot be copied
   Worker(const Worker &) = delete;
+  Worker& operator=(const Worker &) = delete;
 
   Worker(Worker &&) = default;
+  Worker& operator=(Worker &&) = default;
 
   /// call std::thread::join() on its thread
   ~Worker();
@@ -39,6 +41,6 @@ class Worker {
   struct Opaque;
   std::unique_ptr<Opaque> o_;
 };
-}
+}  // namespace cpputils
 
 #endif  // CPPUTILS_WORKER_H
