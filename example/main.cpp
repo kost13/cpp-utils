@@ -1,8 +1,9 @@
 #include <chrono>
 #include <thread>
 #include <vector>
-#include "logger.hpp"
-#include "worker.h"
+
+#include "cpputils/logger.hpp"
+#include "cpputils/worker.h"
 
 void loggerExample() {
   // create logger object
