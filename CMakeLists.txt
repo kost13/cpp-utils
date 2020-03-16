@@ -12,9 +12,9 @@ set(SRC_LIST
     cpputils/guarded_thread.hpp
 )
 
-include_directories(${LIB_NAME} ${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-add_library(${LIB_NAME} STATIC ${SRC_CORE})
+add_library(${LIB_NAME} STATIC ${SRC_LIST})
 
 
 
