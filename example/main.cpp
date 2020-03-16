@@ -75,7 +75,7 @@ void workerExample() {
   worker.async([m = &model] { m->runLongTask("computations"); });
   view.runGuiStuff("rendering gui");
 
-  worker.async([m = &model] { m->runLongTask("computations 2"); });
+  worker.async(std::bind(&Model::runLongTask, model, "computations 2"));
   worker.priorityAsync([m = &model] { m->runShortTask("small change"); });
 
   view.runGuiStuff("rendering gui again");
