@@ -48,19 +48,19 @@ void cpputils::Logger::exportToFile(const char *fname) {
 }
 
 cpputils::Logger::LoggerStream cpputils::Logger::info() {
-  return LoggerStream(*this, LogType::INFO);
+  return LoggerStream(this, LogType::INFO);
 }
 
 cpputils::Logger::LoggerStream cpputils::Logger::warning() {
-  return LoggerStream(*this, LogType::WARNING);
+  return LoggerStream(this, LogType::WARNING);
 }
 
 cpputils::Logger::LoggerStream cpputils::Logger::debug() {
-  return LoggerStream(*this, LogType::DEBUG);
+  return LoggerStream(this, LogType::DEBUG);
 }
 
 cpputils::Logger::LoggerStream cpputils::Logger::critical() {
-  return LoggerStream(*this, LogType::CRITICAL);
+  return LoggerStream(this, LogType::CRITICAL);
 }
 
 void cpputils::Logger::flush(const std::string &txt,
@@ -96,12 +96,11 @@ const char *cpputils::Logger::typeToString(cpputils::Logger::LogType t) {
   }
 }
 
-cpputils::Logger::LoggerStream::LoggerStream(cpputils::Logger::LoggerStream &&o)
-    : logger_(o.logger_), t_(std::move(o.t_)) {}
+cpputils::Logger::LoggerStream::LoggerStream(LoggerStream &&o) noexcept
+    : logger_(o.logger_),
+      t_(o.t_) {}
 
-cpputils::Logger::LoggerStream::~LoggerStream() {
-  logger_.flush(std::move(str()), t_);
-}
+cpputils::Logger::LoggerStream::~LoggerStream() { logger_->flush(str(), t_); }
 
 /// log namespace
 

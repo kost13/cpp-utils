@@ -19,8 +19,10 @@ class Logger {
   class LoggerStream;
 
   Logger() = default;
-  Logger(Logger &) = delete;
-  Logger(Logger &&) = default;
+  Logger(const Logger &) = delete;
+  Logger &operator=(const Logger &) = delete;
+  Logger(Logger &&) = delete;
+  Logger &operator=(Logger &&) = delete;
   ~Logger();
 
   void configure(Config c);
@@ -50,11 +52,12 @@ class Logger {
  public:
   class LoggerStream : public std::ostringstream {
    public:
-    LoggerStream(Logger &logger, LogType t) : logger_(logger), t_(t) {}
+    LoggerStream(Logger *logger, LogType t) : logger_(logger), t_(t) {}
     LoggerStream(const LoggerStream &o) = delete;
     LoggerStream &operator=(const LoggerStream &) = delete;
-    LoggerStream(LoggerStream &&o);
-    ~LoggerStream();
+    LoggerStream(LoggerStream &&o) noexcept;
+    LoggerStream &operator=(LoggerStream &&) = delete;
+    ~LoggerStream() override;
 
     template <typename T>
     LoggerStream &operator<<(const std::vector<T> &v) {
@@ -72,7 +75,7 @@ class Logger {
     }
 
    private:
-    Logger &logger_;
+    Logger *logger_;
     LogType t_;
   };
 };
@@ -89,8 +92,8 @@ Logger::LoggerStream warning();
 Logger::LoggerStream debug();
 Logger::LoggerStream critical();
 
-}  // log
+}  // namespace log
 
-}  // cpputils
+}  // namespace cpputils
 
 #endif  // CPPUTILS_LOGGER_H
