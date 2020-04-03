@@ -16,10 +16,10 @@ class Worker {
 
   /// thread cannot be copied
   Worker(const Worker &) = delete;
-  Worker& operator=(const Worker &) = delete;
+  Worker &operator=(const Worker &) = delete;
 
   Worker(Worker &&) = default;
-  Worker& operator=(Worker &&) = default;
+  Worker &operator=(Worker &&) = default;
 
   /// call std::thread::join() on its thread
   ~Worker();
@@ -35,6 +35,9 @@ class Worker {
 
   /// add task in the front of the tasks queue
   void priorityAsync(std::function<void()> f);
+
+  /// checks if tasks queue is empty
+  bool empty();
 
  private:
   /// hide implementation with opaque pointer

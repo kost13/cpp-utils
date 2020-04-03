@@ -84,3 +84,8 @@ void cpputils::Worker::priorityAsync(std::function<void()> f) {
   o_->task_queue_.push_front(f);
   o_->condition_.notify_all();
 }
+
+bool cpputils::Worker::empty() {
+  std::lock_guard<std::mutex> lock(o_->mutex_);
+  return o_->task_queue_.empty();
+}
