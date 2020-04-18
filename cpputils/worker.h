@@ -1,6 +1,7 @@
 #ifndef CPPUTILS_WORKER_H
 #define CPPUTILS_WORKER_H
 
+#include <functional>
 #include <memory>
 
 namespace cpputils {
