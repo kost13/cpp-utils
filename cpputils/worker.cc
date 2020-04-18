@@ -2,6 +2,7 @@
 
 #include <condition_variable>
 #include <deque>
+#include <functional>
 #include <mutex>
 #include <thread>
 
@@ -73,13 +74,13 @@ bool cpputils::Worker::stop(bool clear_queue) {
   return true;
 }
 
-void cpputils::Worker::async(std::function<void()> f) {
+void cpputils::Worker::async(const std::function<void()>& f) {
   std::lock_guard<std::mutex> lock(o_->mutex_);
   o_->task_queue_.push_back(f);
   o_->condition_.notify_all();
 }
 
-void cpputils::Worker::priorityAsync(std::function<void()> f) {
+void cpputils::Worker::priorityAsync(const std::function<void()>& f) {
   std::lock_guard<std::mutex> lock(o_->mutex_);
   o_->task_queue_.push_front(f);
   o_->condition_.notify_all();

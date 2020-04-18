@@ -94,6 +94,7 @@ const char *cpputils::Logger::typeToString(cpputils::Logger::LogType t) {
     case LogType::CRITICAL:
       return "critical";
   }
+  return "";
 }
 
 cpputils::Logger::LoggerStream::LoggerStream(LoggerStream &&o) noexcept

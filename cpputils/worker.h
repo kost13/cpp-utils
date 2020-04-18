@@ -1,7 +1,6 @@
 #ifndef CPPUTILS_WORKER_H
 #define CPPUTILS_WORKER_H
 
-#include <functional>
 #include <memory>
 
 namespace cpputils {
@@ -31,10 +30,10 @@ class Worker {
   bool stop(bool clear_queue);
 
   /// add task in the end of the tasks queue
-  void async(std::function<void()> f);
+  void async(const std::function<void()> &f);
 
   /// add task in the front of the tasks queue
-  void priorityAsync(std::function<void()> f);
+  void priorityAsync(const std::function<void()> &f);
 
   /// checks if tasks queue is empty
   bool empty();
