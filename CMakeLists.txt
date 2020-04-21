@@ -16,6 +16,8 @@ target_include_directories(${LIB_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 if (CMAKE_COMPILER_IS_GNUCXX)    
     target_compile_options(${LIB_NAME} PRIVATE -Werror -Wall -Wextra -std=c++14)
     target_link_libraries(${LIB_NAME} PRIVATE -pthread)
+elseif(MSVC)
+    target_compile_options(${LIB_NAME} PRIVATE /W3)
 endif()
 
 
