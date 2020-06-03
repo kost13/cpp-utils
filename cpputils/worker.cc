@@ -1,3 +1,6 @@
+// cpputils
+// author: Lukasz Kostrzewa
+
 #include "worker.h"
 
 #include <condition_variable>

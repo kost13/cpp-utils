@@ -1,3 +1,6 @@
+// cpputils
+// author: Lukasz Kostrzewa
+
 #ifndef CPPUTILS_LOGGER_H
 #define CPPUTILS_LOGGER_H
 

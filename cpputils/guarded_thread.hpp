@@ -1,3 +1,6 @@
+// cpputils
+// author: Lukasz Kostrzewa
+
 #ifndef CPPUTILS_GUARDED_THREAD_H
 #define CPPUTILS_GUARDED_THREAD_H
 

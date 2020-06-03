@@ -1,3 +1,6 @@
+// cpputils
+// author: Lukasz Kostrzewa
+
 #include "logger.hpp"
 
 #include <cstring>
