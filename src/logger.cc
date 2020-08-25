@@ -1,7 +1,7 @@
 // cpputils
 // author: Lukasz Kostrzewa
 
-#include "logger.hpp"
+#include "cpputils/logger.hpp"
 
 #include <cstring>
 #include <ctime>
@@ -16,7 +16,7 @@ void datetime(std::ostream &stream) {
 
 // logger hidden from the user accessible via functions from log namespace
 cpputils::Logger logger;
-}
+}  // namespace
 
 cpputils::Logger::~Logger() {
   if (fs_.is_open()) {
@@ -77,10 +77,15 @@ void cpputils::Logger::flush(const std::string &txt,
 void cpputils::Logger::flush(const std::string &txt,
                              cpputils::Logger::LogType t, std::ostream &ios) {
   std::lock_guard<std::mutex> lock(mutex_);
+
+  if (!show_debug_ && t == LogType::DEBUG) {
+    return;
+  }
+
   if (show_datetime_) {
     datetime(ios);
   }
-  if (show_prefix_ && (show_debug_ || t != LogType::DEBUG)) {
+  if (show_prefix_) {
     ios << "[" << std::setw(8) << typeToString(t) << "] ";
   }
   ios << txt << std::endl;
@@ -101,8 +106,7 @@ const char *cpputils::Logger::typeToString(cpputils::Logger::LogType t) {
 }
 
 cpputils::Logger::LoggerStream::LoggerStream(LoggerStream &&o) noexcept
-    : logger_(o.logger_),
-      t_(o.t_) {}
+    : logger_(o.logger_), t_(o.t_) {}
 
 cpputils::Logger::LoggerStream::~LoggerStream() { logger_->flush(str(), t_); }
 

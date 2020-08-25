@@ -1,7 +1,7 @@
 // cpputils
 // author: Lukasz Kostrzewa
 
-#include "worker.h"
+#include "cpputils/worker.h"
 
 #include <condition_variable>
 #include <deque>

@@ -1,25 +1,34 @@
 cmake_minimum_required(VERSION 3.10.0)
 
-set(LIB_NAME CppUtils)
+project(
+  CppUtils
+  VERSION 0.1
+  DESCRIPTION "A set of cpp utility classes"
+  LANGUAGES CXX)
 
-set(SRC_LIST
-    cpputils/worker.cc
-    cpputils/logger.cc
-    cpputils/logger.hpp
-    cpputils/guarded_thread.hpp
-)
+if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 
-add_library(${LIB_NAME} STATIC ${SRC_LIST})
+    include(CTest)
 
-target_include_directories(${LIB_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+    set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-if (CMAKE_COMPILER_IS_GNUCXX)    
-    target_compile_options(${LIB_NAME} PRIVATE -Werror -Wall -Wextra -std=c++14)
-    target_link_libraries(${LIB_NAME} PRIVATE -pthread)
-elseif(MSVC)
-    target_compile_options(${LIB_NAME} PRIVATE /W3)
+    find_package(Doxygen)
+    if(Doxygen_FOUND)
+      add_subdirectory(docs)
+    else()
+      message(WARNING "Doxygen not found, not building docs")
+    endif()
+
 endif()
 
+add_subdirectory(src)
 
-
-
+if((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME OR CPP_UTILS_BUILD_TESTING)
+   AND BUILD_TESTING)
+    find_package(GTest)
+    if(GTest_FOUND)
+        add_subdirectory(tests)
+    else()
+        message(WARNING "GTest not found, not building tests")
+    endif()
+endif()
