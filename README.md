@@ -1,4 +1,5 @@
 # CppUtils [work in progress]
+![GitHub Actions](https://github.com/kost13/cpp-utils/workflows/cpp-utils-ci/badge.svg)
 
 ## Logger 
 Thread-safe logging tool. It provides stream interface.
