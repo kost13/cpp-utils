@@ -1,0 +1,25 @@
+
+name: cpp-utils-ci
+
+on: [push, pull_request]
+jobs:
+  build_linux:
+    name: linux_build
+    runs-on: ubuntu-latest
+    container: kost13/cpp-gtest:latest
+    strategy:
+      fail-fast: true
+        
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          submodules: true
+      - name: build
+        run: |
+          mkdir -p build && cd build
+          cmake -GNinja ..
+          ninja
+      - name: run_tests
+        run: |
+          cd build
+          ninja test
